@@ -1,8 +1,9 @@
-class AddOrdersLineItems < ActiveRecord::Migration
+class AddOrderLineItems < ActiveRecord::Migration
   def change
     create_table :orders_line_items do |t|
       t.string :colour
       t.integer :size
+      t.decimal :price, :precision => 5, :scale => 2
 
       t.references :order
       t.references :article

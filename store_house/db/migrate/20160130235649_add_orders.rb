@@ -5,13 +5,12 @@ class AddOrders < ActiveRecord::Migration
       t.date :date, :null => false
       t.decimal :discount, :precision => 5, :scale => 2, :default => 0
       t.date :deliver_date
+      t.date :voided_at
 
       t.references :customer
-      t.references :article
 
       t.timestamps
     end
     add_index :orders, :customer_id
-    add_index :orders, :article_id
   end
 end

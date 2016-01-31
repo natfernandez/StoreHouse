@@ -10,8 +10,7 @@ class AddAddresses < ActiveRecord::Migration
       t.string :city, :limit => 30
       t.string :post_code, :limit =>5
 
-      t.references :customer
+      t.references :addressable, polymorphic: true, index: true
     end
-    add_index :addresses, :customer_id
   end
 end
