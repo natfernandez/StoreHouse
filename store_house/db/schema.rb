@@ -94,7 +94,7 @@ ActiveRecord::Schema.define(:version => 20160130235843) do
   add_index "orders_line_items", ["order_id"], :name => "index_orders_line_items_on_order_id"
 
   create_table "prices", :force => true do |t|
-    t.date     "date_from",  :default => '2016-01-31'
+    t.date     "date_from",  :default => '2016-02-01'
     t.date     "date_to"
     t.integer  "article_id"
     t.integer  "cost_id"
