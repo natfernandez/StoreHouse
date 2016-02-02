@@ -5,10 +5,10 @@ class AddPrices < ActiveRecord::Migration
       t.date :date_to
       t.decimal  :cost_price, :precision => 5, :scale => 2
       t.decimal  :sale_price, :precision => 5, :scale => 2
-      t.references :article
-      t.references :cost
 
+      t.references :priceable, polymorphic: true
       t.timestamps
     end
+    add_index :prices, [:priceable_id, :priceable_type], :unique => true
   end
 end

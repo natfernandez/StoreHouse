@@ -12,5 +12,6 @@ class AddOrders < ActiveRecord::Migration
       t.timestamps
     end
     add_index :orders, :customer_id
+    add_index :orders, :order_number
   end
 end

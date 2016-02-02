@@ -1,7 +1,7 @@
 class Article < ActiveRecord::Base
 
   # Associations
-  has_many :prices, :inverse_of => :article
+  has_many :prices, :as => :priceable
 
   # Attributes
   attr_accessible :code, :description

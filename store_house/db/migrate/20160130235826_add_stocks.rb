@@ -8,6 +8,6 @@ class AddStocks < ActiveRecord::Migration
 
       t.timestamps
     end
-    add_index :stocks, :article_id
+    add_index :stocks, [:article_id, :colour, :size]
   end
 end

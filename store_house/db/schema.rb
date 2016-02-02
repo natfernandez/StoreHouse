@@ -91,17 +91,20 @@ ActiveRecord::Schema.define(:version => 20160130235843) do
   end
 
   add_index "orders", ["customer_id"], :name => "index_orders_on_customer_id"
+  add_index "orders", ["order_number"], :name => "index_orders_on_order_number"
 
   create_table "prices", :force => true do |t|
-    t.date     "date_from",                                :default => '2016-02-02'
+    t.date     "date_from",                                    :default => '2016-02-02'
     t.date     "date_to"
-    t.decimal  "cost_price", :precision => 5, :scale => 2
-    t.decimal  "sale_price", :precision => 5, :scale => 2
-    t.integer  "article_id"
-    t.integer  "cost_id"
-    t.datetime "created_at",                                                         :null => false
-    t.datetime "updated_at",                                                         :null => false
+    t.decimal  "cost_price",     :precision => 5, :scale => 2
+    t.decimal  "sale_price",     :precision => 5, :scale => 2
+    t.integer  "priceable_id"
+    t.string   "priceable_type"
+    t.datetime "created_at",                                                             :null => false
+    t.datetime "updated_at",                                                             :null => false
   end
+
+  add_index "prices", ["priceable_id", "priceable_type"], :name => "index_prices_on_priceable_id_and_priceable_type", :unique => true
 
   create_table "stocks", :force => true do |t|
     t.string   "colour"
@@ -112,6 +115,6 @@ ActiveRecord::Schema.define(:version => 20160130235843) do
     t.datetime "updated_at", :null => false
   end
 
-  add_index "stocks", ["article_id"], :name => "index_stocks_on_article_id"
+  add_index "stocks", ["article_id", "colour", "size"], :name => "index_stocks_on_article_id_and_colour_and_size"
 
 end

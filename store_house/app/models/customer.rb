@@ -1,6 +1,6 @@
 class Customer < ActiveRecord::Base
   # Associations
-  has_many :address, :as => :addressable
+  has_many :addresses, :as => :addressable
 
   # Attributes
   attr_accessible :name, :company, :tax_number, :re_income, :email, :telephone, :mobile, :contact_person, :notes

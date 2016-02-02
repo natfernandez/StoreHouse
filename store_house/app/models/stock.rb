@@ -1,12 +1,12 @@
 class Stock < ActiveRecord::Base
   # Associations
+  has_many :prices, :as => :priceable
   belongs_to :article, :foreign_key => :article_id, :inverse_of => :stock
-  has_many :prices, :inverse_of => :stock
 
   # Attributes
-  attr_accessible :colour, :size, :price, :quantity
+  attr_accessible :colour, :size, :quantity
 
   # Validations
-  validates :colour, :size, :price, :quantity, :presence => true
+  validates :colour, :size, :quantity, :presence => true
 end
 
