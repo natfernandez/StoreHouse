@@ -1,16 +1,14 @@
 class AddAddresses < ActiveRecord::Migration
   def change
     create_table :addresses do |t|
-      t.string :via_type, :limit => 20
-      t.string :via, :limit =>60
-      t.string :number, :limit => 10
-      t.string :floor, :limit => 10
-      t.string :stair, :limit => 10
-      t.string :town, :limit => 30
-      t.string :city, :limit => 30
+      t.string :line_1, :limit => 50
+      t.string :line_2, :limit => 50
+      t.string :line_3, :limit => 50
+      t.string :line_4, :limit => 50
       t.string :post_code, :limit =>5
 
-      t.references :addressable, polymorphic: true, index: true
+      t.references :addressable, polymorphic: true
     end
+    add_index :addresses, [:addressable_id, :addressable_type], :unique => true
   end
 end

@@ -5,7 +5,6 @@ class AddCosts < ActiveRecord::Migration
       t.decimal :confection, :precision => 5, :scale => 2
       t.decimal :supplement, :precision => 5, :scale => 2
       t.decimal :supply, :precision => 5, :scale => 2
-      t.decimal :cost_price, :precision => 5, :scale => 2
       t.references :article
 
       t.timestamps

@@ -14,17 +14,16 @@
 ActiveRecord::Schema.define(:version => 20160130235843) do
 
   create_table "addresses", :force => true do |t|
-    t.string  "via_type",         :limit => 20
-    t.string  "via",              :limit => 60
-    t.string  "number",           :limit => 10
-    t.string  "floor",            :limit => 10
-    t.string  "stair",            :limit => 10
-    t.string  "town",             :limit => 30
-    t.string  "city",             :limit => 30
+    t.string  "line_1",           :limit => 50
+    t.string  "line_2",           :limit => 50
+    t.string  "line_3",           :limit => 50
+    t.string  "line_4",           :limit => 50
     t.string  "post_code",        :limit => 5
     t.integer "addressable_id"
     t.string  "addressable_type"
   end
+
+  add_index "addresses", ["addressable_id", "addressable_type"], :name => "index_addresses_on_addressable_id_and_addressable_type", :unique => true
 
   create_table "articles", :force => true do |t|
     t.string   "code",        :limit => 4,   :null => false
@@ -49,7 +48,6 @@ ActiveRecord::Schema.define(:version => 20160130235843) do
     t.decimal  "confection",   :precision => 5, :scale => 2
     t.decimal  "supplement",   :precision => 5, :scale => 2
     t.decimal  "supply",       :precision => 5, :scale => 2
-    t.decimal  "cost_price",   :precision => 5, :scale => 2
     t.integer  "article_id"
     t.datetime "created_at",                                 :null => false
     t.datetime "updated_at",                                 :null => false
@@ -69,6 +67,18 @@ ActiveRecord::Schema.define(:version => 20160130235843) do
     t.string  "notes"
   end
 
+  create_table "order_line_items", :force => true do |t|
+    t.string  "colour"
+    t.integer "size"
+    t.integer "quantity"
+    t.decimal "price",      :precision => 5, :scale => 2
+    t.integer "order_id"
+    t.integer "article_id"
+  end
+
+  add_index "order_line_items", ["article_id"], :name => "index_order_line_items_on_article_id"
+  add_index "order_line_items", ["order_id"], :name => "index_order_line_items_on_order_id"
+
   create_table "orders", :force => true do |t|
     t.integer  "order_number",                                                :null => false
     t.date     "date",                                                        :null => false
@@ -82,24 +92,15 @@ ActiveRecord::Schema.define(:version => 20160130235843) do
 
   add_index "orders", ["customer_id"], :name => "index_orders_on_customer_id"
 
-  create_table "orders_line_items", :force => true do |t|
-    t.string  "colour"
-    t.integer "size"
-    t.decimal "price",      :precision => 5, :scale => 2
-    t.integer "order_id"
-    t.integer "article_id"
-  end
-
-  add_index "orders_line_items", ["article_id"], :name => "index_orders_line_items_on_article_id"
-  add_index "orders_line_items", ["order_id"], :name => "index_orders_line_items_on_order_id"
-
   create_table "prices", :force => true do |t|
-    t.date     "date_from",  :default => '2016-02-01'
+    t.date     "date_from",                                :default => '2016-02-02'
     t.date     "date_to"
+    t.decimal  "cost_price", :precision => 5, :scale => 2
+    t.decimal  "sale_price", :precision => 5, :scale => 2
     t.integer  "article_id"
     t.integer  "cost_id"
-    t.datetime "created_at",                           :null => false
-    t.datetime "updated_at",                           :null => false
+    t.datetime "created_at",                                                         :null => false
+    t.datetime "updated_at",                                                         :null => false
   end
 
   create_table "stocks", :force => true do |t|
