@@ -1,9 +1,23 @@
 require 'spec_helper'
 
 describe Address, :type => :model do
-
   describe 'associations' do
     it { is_expected.to belong_to(:addressable) }
   end
-end
 
+  describe 'attributes' do
+    it { is_expected.to allow_mass_assignment_of :line_1 }
+    it { is_expected.to allow_mass_assignment_of :line_2 }
+    it { is_expected.to allow_mass_assignment_of :line_3 }
+    it { is_expected.to allow_mass_assignment_of :post_code }
+  end
+
+  describe 'validations' do
+    it { is_expected.to validate_presence_of :addressable }
+    it { is_expected.to validate_length_of(:line_1).is_at_most(50) }
+    it { is_expected.to validate_length_of(:line_2).is_at_most(50) }
+    it { is_expected.to validate_length_of(:line_3).is_at_most(50) }
+    it { is_expected.to validate_length_of(:line_3).is_at_most(50) }
+    it { is_expected.to validate_length_of(:post_code).is_at_most(5) }
+  end
+end
