@@ -19,4 +19,12 @@ describe Order, :type => :model do
     it { is_expected.to validate_presence_of :date }
     it { is_expected.to validate_numericality_of(:discount).is_less_than(100).only_integer}
   end
+
+  describe 'initialization' do
+    describe 'set_defaults' do
+      it 'should initialize discount to 0.0' do
+        expect(subject.discount).to eql(0.0)
+      end
+    end
+  end
 end

@@ -22,4 +22,12 @@ describe Customer, :type => :model do
     it { is_expected.to validate_presence_of :tax_number }
     it { is_expected.to validate_length_of(:tax_number).is_at_most(9) }
   end
+
+  describe 'initialization' do
+    describe 'set_defaults' do
+      it 'should initialize discount to 0.0' do
+        expect(subject.re_income).to eql(false)
+      end
+    end
+  end
 end
