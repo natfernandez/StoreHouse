@@ -17,5 +17,10 @@ describe Article, :type => :model do
     it { is_expected.to validate_length_of(:code).is_at_most(4) }
     it { is_expected.to validate_length_of(:description).is_at_most(150) }
   end
+
+  describe 'validations uniqueness code' do
+    subject { Article.new(description: "Here is the content") }
+    it { is_expected.to validate_uniqueness_of :code }
+  end
 end
 

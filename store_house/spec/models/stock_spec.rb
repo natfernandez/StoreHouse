@@ -15,4 +15,8 @@ describe Stock, :type => :model do
     it { is_expected.to validate_presence_of :colour }
     it { is_expected.to validate_presence_of :size }
   end
+
+  describe 'validations uniqueness c' do
+    it { is_expected.to validate_uniqueness_of :colour }.scoped_to(:article_id)
+  end
 end

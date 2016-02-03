@@ -8,5 +8,6 @@ class Stock < ActiveRecord::Base
 
   # Validations
   validates :colour, :size, :quantity, :presence => true
+  validates :colour, :uniqueness => { :scope => :article_id }
 end
 
