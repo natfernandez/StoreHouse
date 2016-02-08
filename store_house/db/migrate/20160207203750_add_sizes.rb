@@ -1,9 +1,8 @@
 class AddSizes < ActiveRecord::Migration
   def change
     create_table :sizes do |t|
-      t.references :colour
       t.string :description
+      t.string :type, :null => false, :limit => 5
     end
-    add_index :sizes, :colour_id
   end
 end

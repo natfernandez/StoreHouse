@@ -1,7 +1,7 @@
 class Contact < ActiveRecord::Base
   # Associations
   has_many :addresses, :as => :addressable
-  has_many :orders, :inverse_of => :customer
+  has_many :orders, :foreign_key => :contact_id, :inverse_of => :contact
 
   # Attributes
   attr_accessible :name, :company, :tax_number, :re_income, :email, :telephone, :mobile,

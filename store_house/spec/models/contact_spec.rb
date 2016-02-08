@@ -3,6 +3,7 @@ require 'spec_helper'
 describe Contact, :type => :model do
   describe 'associations' do
     it { is_expected.to have_many(:addresses) }
+    it { is_expected.to have_many(:orders) }
   end
 
   describe 'attributes' do
@@ -14,7 +15,6 @@ describe Contact, :type => :model do
     it { is_expected.to allow_mass_assignment_of :telephone }
     it { is_expected.to allow_mass_assignment_of :mobile }
     it { is_expected.to allow_mass_assignment_of :contact_person }
-    it { is_expected.to allow_mass_assignment_of :notes }
     it { is_expected.to allow_mass_assignment_of :notes }
   end
 
