@@ -9,5 +9,11 @@ class Price < ActiveRecord::Base
   validates :priceable, :presence => true
   validates :date_from, :presence => true
   validates :amount, :presence => true
-end
 
+  after_initialize :set_default
+
+  private
+  def set_default
+    self.date_from ||= Date.today if new_record?
+  end
+end
