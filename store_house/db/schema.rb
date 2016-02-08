@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160130235843) do
+ActiveRecord::Schema.define(:version => 20160207203750) do
 
   create_table "addresses", :force => true do |t|
     t.string  "line_1",           :limit => 50
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(:version => 20160130235843) do
     t.string  "line_3",           :limit => 50
     t.string  "line_4",           :limit => 50
     t.string  "post_code",        :limit => 5
+    t.string  "country",          :limit => 80
     t.integer "addressable_id"
     t.string  "addressable_type"
   end
@@ -29,13 +30,13 @@ ActiveRecord::Schema.define(:version => 20160130235843) do
     t.string   "code",        :limit => 4,   :null => false
     t.string   "description", :limit => 150, :null => false
     t.date     "voided_at"
+    t.datetime "deleted_at"
     t.datetime "created_at",                 :null => false
     t.datetime "updated_at",                 :null => false
-    t.integer  "price_id"
   end
 
-  create_table "businesses", :force => true do |t|
-    t.string "name"
+  create_table "business_data", :force => true do |t|
+    t.string "name",                    :null => false
     t.string "company"
     t.string "tax_number", :limit => 9
     t.string "email"
@@ -43,37 +44,46 @@ ActiveRecord::Schema.define(:version => 20160130235843) do
     t.string "mobile"
   end
 
+  create_table "colours", :force => true do |t|
+    t.string "description"
+  end
+
+  create_table "contacts", :force => true do |t|
+    t.string   "name",                                                                         :null => false
+    t.string   "company"
+    t.string   "tax_number",     :limit => 9
+    t.boolean  "re_income",                                                 :default => false
+    t.string   "email"
+    t.string   "telephone"
+    t.string   "mobile"
+    t.string   "contact_person"
+    t.string   "notes"
+    t.string   "type",                                                                         :null => false
+    t.decimal  "risk",                        :precision => 5, :scale => 2
+    t.datetime "deleted_at"
+  end
+
+  add_index "contacts", ["type"], :name => "index_contacts_on_type", :unique => true
+
   create_table "costs", :force => true do |t|
+    t.integer  "article_id"
     t.decimal  "raw_material", :precision => 5, :scale => 2
     t.decimal  "confection",   :precision => 5, :scale => 2
     t.decimal  "supplement",   :precision => 5, :scale => 2
     t.decimal  "supply",       :precision => 5, :scale => 2
-    t.integer  "article_id"
     t.datetime "created_at",                                 :null => false
     t.datetime "updated_at",                                 :null => false
   end
 
   add_index "costs", ["article_id"], :name => "index_costs_on_article_id"
 
-  create_table "customers", :force => true do |t|
-    t.string  "name"
-    t.string  "company"
-    t.string  "tax_number",     :limit => 9
-    t.boolean "re_income",                   :default => false
-    t.string  "email"
-    t.string  "telephone"
-    t.string  "mobile"
-    t.string  "contact_person"
-    t.string  "notes"
-  end
-
   create_table "order_line_items", :force => true do |t|
+    t.integer "order_id"
+    t.integer "article_id",                               :null => false
     t.string  "colour"
     t.integer "size"
     t.integer "quantity"
     t.decimal "price",      :precision => 5, :scale => 2
-    t.integer "order_id"
-    t.integer "article_id"
   end
 
   add_index "order_line_items", ["article_id"], :name => "index_order_line_items_on_article_id"
@@ -81,11 +91,11 @@ ActiveRecord::Schema.define(:version => 20160130235843) do
 
   create_table "orders", :force => true do |t|
     t.integer  "order_number",                                                :null => false
+    t.integer  "customer_id",                                                 :null => false
     t.date     "date",                                                        :null => false
     t.decimal  "discount",     :precision => 5, :scale => 2, :default => 0.0
     t.date     "deliver_date"
     t.date     "voided_at"
-    t.integer  "customer_id"
     t.datetime "created_at",                                                  :null => false
     t.datetime "updated_at",                                                  :null => false
   end
@@ -94,10 +104,9 @@ ActiveRecord::Schema.define(:version => 20160130235843) do
   add_index "orders", ["order_number"], :name => "index_orders_on_order_number"
 
   create_table "prices", :force => true do |t|
-    t.date     "date_from",                                    :default => '2016-02-02'
+    t.date     "date_from",                                    :default => '2016-02-08'
     t.date     "date_to"
-    t.decimal  "cost_price",     :precision => 5, :scale => 2
-    t.decimal  "sale_price",     :precision => 5, :scale => 2
+    t.decimal  "amount",         :precision => 5, :scale => 2
     t.integer  "priceable_id"
     t.string   "priceable_type"
     t.datetime "created_at",                                                             :null => false
@@ -106,15 +115,22 @@ ActiveRecord::Schema.define(:version => 20160130235843) do
 
   add_index "prices", ["priceable_id", "priceable_type"], :name => "index_prices_on_priceable_id_and_priceable_type", :unique => true
 
+  create_table "sizes", :force => true do |t|
+    t.integer "colour_id"
+    t.string  "description"
+  end
+
+  add_index "sizes", ["colour_id"], :name => "index_sizes_on_colour_id"
+
   create_table "stocks", :force => true do |t|
-    t.string   "colour"
-    t.string   "size"
-    t.integer  "quantity"
     t.integer  "article_id"
+    t.integer  "colour_id"
+    t.integer  "size_id"
+    t.integer  "quantity"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
-  add_index "stocks", ["article_id", "colour", "size"], :name => "index_stocks_on_article_id_and_colour_and_size"
+  add_index "stocks", ["article_id", "colour_id", "size_id"], :name => "index_stocks_on_article_id_and_colour_id_and_size_id"
 
 end

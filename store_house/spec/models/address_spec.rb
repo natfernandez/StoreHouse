@@ -17,7 +17,8 @@ describe Address, :type => :model do
     it { is_expected.to validate_length_of(:line_1).is_at_most(50) }
     it { is_expected.to validate_length_of(:line_2).is_at_most(50) }
     it { is_expected.to validate_length_of(:line_3).is_at_most(50) }
-    it { is_expected.to validate_length_of(:line_3).is_at_most(50) }
+    it { is_expected.to validate_length_of(:line_4).is_at_most(50) }
     it { is_expected.to validate_length_of(:post_code).is_at_most(5) }
+    it { is_expected.to validate_length_of(:country).is_at_most(80) }
   end
 end

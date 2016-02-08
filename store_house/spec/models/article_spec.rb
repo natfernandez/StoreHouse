@@ -16,6 +16,7 @@ describe Article, :type => :model do
     it { is_expected.to validate_presence_of :description }
     it { is_expected.to validate_length_of(:code).is_at_most(4) }
     it { is_expected.to validate_length_of(:description).is_at_most(150) }
+    it { is_expected.not_to allow_mass_assignment_of :deleted_at }
   end
 
   describe 'validations uniqueness code' do

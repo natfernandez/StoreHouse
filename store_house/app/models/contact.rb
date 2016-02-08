@@ -1,10 +1,11 @@
-class Customer < ActiveRecord::Base
+class Contact < ActiveRecord::Base
   # Associations
   has_many :addresses, :as => :addressable
   has_many :orders, :inverse_of => :customer
 
   # Attributes
-  attr_accessible :name, :company, :tax_number, :re_income, :email, :telephone, :mobile, :contact_person, :notes
+  attr_accessible :name, :company, :tax_number, :re_income, :email, :telephone, :mobile,
+    :contact_person, :notes, :risk
 
   # Validations
   validates :name, :tax_number, :presence => true

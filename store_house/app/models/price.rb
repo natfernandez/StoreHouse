@@ -3,10 +3,11 @@ class Price < ActiveRecord::Base
   belongs_to :priceable, :polymorphic => true
 
   # Attributes
-  attr_accessible :date_from, :date_to, :cost_price, :sale_price
+  attr_accessible :date_from, :date_to, :amount
 
   # Validations
   validates :priceable, :presence => true
-  validates :date_from, :sale_price, :presence => true
+  validates :date_from, :presence => true
+  validates :amount, :presence => true
 end
 
