@@ -8,4 +8,3 @@ class Cost < ActiveRecord::Base
   # Validations
   validates :article_id, :presence => true
 end
-

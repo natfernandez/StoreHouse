@@ -12,4 +12,3 @@ class Article < ActiveRecord::Base
   validates :code, :length => { :maximum => 4 }
   validates :description, :length => { :maximum => 150 }
 end
-

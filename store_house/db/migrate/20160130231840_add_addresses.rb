@@ -6,6 +6,7 @@ class AddAddresses < ActiveRecord::Migration
       t.string :line_3, :limit => 50
       t.string :line_4, :limit => 50
       t.string :post_code, :limit =>5
+      t.string :country, :limit => 80
 
       t.references :addressable, polymorphic: true
     end

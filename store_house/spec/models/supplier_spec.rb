@@ -1,0 +1,2 @@
+class Supplier < Contact
+end

@@ -1,7 +1,7 @@
-class AddBusinesses < ActiveRecord::Migration
+class AddBusinessData < ActiveRecord::Migration
   def change
-    create_table :businesses do |t|
-      t.string :name
+    create_table :business_data do |t|
+      t.string :name, :null => false
       t.string :company
       t.string :tax_number, :limit => 9
       t.string :email

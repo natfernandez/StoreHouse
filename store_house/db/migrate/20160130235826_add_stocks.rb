@@ -1,13 +1,13 @@
 class AddStocks < ActiveRecord::Migration
   def change
     create_table :stocks do |t|
-      t.string :colour
-      t.string :size
-      t.integer :quantity
       t.references :article
+      t.references :colour
+      t.references :size
+      t.integer :quantity
 
       t.timestamps
     end
-    add_index :stocks, [:article_id, :colour, :size]
+    add_index :stocks, [:article_id, :colour_id, :size_id]
   end
 end

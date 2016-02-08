@@ -4,10 +4,9 @@ class Stock < ActiveRecord::Base
   belongs_to :article, :foreign_key => :article_id, :inverse_of => :stock
 
   # Attributes
-  attr_accessible :colour, :size, :quantity
+  attr_accessible :quantity
 
   # Validations
-  validates :colour, :size, :quantity, :presence => true
-  validates :colour, :uniqueness => { :scope => :article_id }
+  validates :article_id, :colour_id, :size_id, :quantity, :presence => true
+  validates :colour_id, :uniqueness => { :scope => :article_id }
 end
-
