@@ -21,4 +21,12 @@ describe Address, :type => :model do
     it { is_expected.to validate_length_of(:post_code).is_at_most(5) }
     it { is_expected.to validate_length_of(:country).is_at_most(80) }
   end
+
+  describe 'initialization' do
+    describe 'set_default_country' do
+      it 'returns the default country' do
+        expect(subject.country).to eql("España")
+      end
+    end
+  end
 end

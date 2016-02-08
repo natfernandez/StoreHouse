@@ -16,4 +16,13 @@ describe Price, :type => :model do
     it { is_expected.to validate_presence_of :date_from }
     it { is_expected.to validate_presence_of :amount }
   end
+
+  describe 'initialization' do
+    describe 'set_default' do
+      let(:date) { Date.today }
+      it 'returns the default date as today' do
+        expect(subject.date_from).to eql(date)
+      end
+    end
+  end
 end
