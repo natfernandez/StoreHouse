@@ -23,6 +23,8 @@ end
 group :development, :test do
   gem 'rspec-rails', '~> 2.99.0'
   gem 'shoulda-matchers', '>= 2.6.1'
+  gem 'pry-rails'
+  gem 'pry-debugger', :platforms => :ruby_19
+  gem 'pry-byebug', :platforms => [:ruby_20, :ruby_21]
+  gem 'jquery-rails'
 end
-gem 'jquery-rails'
-

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Size, :type => :model do
+shared_examples_for 'Size' do
   describe 'attributes' do
     it { is_expected.to allow_mass_assignment_of :description }
   end
