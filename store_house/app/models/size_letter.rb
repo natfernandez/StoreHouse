@@ -1,0 +1,3 @@
+class SizeLetter < Size
+
+end
