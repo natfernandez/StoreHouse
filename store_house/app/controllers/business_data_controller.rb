@@ -8,4 +8,12 @@ class BusinessDataController < ApplicationController
     @bussines_data.save
     redirect_to business_data_url
   end
+
+  def update
+    @business_data = BusinessData.find(params[:id])
+
+    if @business_data.update(:params_data)
+      redirect_to @business_data
+    end
+  end
 end

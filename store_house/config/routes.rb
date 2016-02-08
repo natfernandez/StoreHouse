@@ -3,7 +3,13 @@ StoreHouse::Application.routes.draw do
   # first created -> highest priority.
   root :to => "business_data#index"
 
-  resources :business_data
+  resources :business_data, only: [:create, :new, :update, :show, :index]
+  resources :articles, only: [:create, :new, :update, :show, :index]
+  resources :contacts, only: [:create, :new, :update, :show, :index]
+  resources :costs, only: [:create, :new, :update, :show, :index]
+  resources :orders, only: [:create, :new, :update, :show, :index]
+  resources :stocks, only: [:create, :new, :update, :show, :index]
+
   #   collection do
   #     post :business_data
   #   end
