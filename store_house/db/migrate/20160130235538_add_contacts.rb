@@ -10,10 +10,8 @@ class AddContacts < ActiveRecord::Migration
       t.string :mobile
       t.string :contact_person
       t.string :notes
-      t.string :type, null: false, limit: 255
       t.decimal :risk, :precision => 5, :scale => 2
       t.datetime :deleted_at
     end
-    add_index :contacts, [:type], { unique: true }
   end
 end

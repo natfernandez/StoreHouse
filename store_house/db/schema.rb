@@ -58,12 +58,9 @@ ActiveRecord::Schema.define(:version => 20160207203750) do
     t.string   "mobile"
     t.string   "contact_person"
     t.string   "notes"
-    t.string   "type",                                                                         :null => false
     t.decimal  "risk",                        :precision => 5, :scale => 2
     t.datetime "deleted_at"
   end
-
-  add_index "contacts", ["type"], :name => "index_contacts_on_type", :unique => true
 
   create_table "costs", :force => true do |t|
     t.integer  "article_id"
@@ -91,7 +88,7 @@ ActiveRecord::Schema.define(:version => 20160207203750) do
 
   create_table "orders", :force => true do |t|
     t.integer  "order_number",                                                :null => false
-    t.integer  "customer_id",                                                 :null => false
+    t.integer  "contact_id",                                                  :null => false
     t.date     "date",                                                        :null => false
     t.decimal  "discount",     :precision => 5, :scale => 2, :default => 0.0
     t.date     "deliver_date"
@@ -100,7 +97,7 @@ ActiveRecord::Schema.define(:version => 20160207203750) do
     t.datetime "updated_at",                                                  :null => false
   end
 
-  add_index "orders", ["customer_id"], :name => "index_orders_on_customer_id"
+  add_index "orders", ["contact_id"], :name => "index_orders_on_contact_id"
   add_index "orders", ["order_number"], :name => "index_orders_on_order_number"
 
   create_table "prices", :force => true do |t|
@@ -116,11 +113,9 @@ ActiveRecord::Schema.define(:version => 20160207203750) do
   add_index "prices", ["priceable_id", "priceable_type"], :name => "index_prices_on_priceable_id_and_priceable_type", :unique => true
 
   create_table "sizes", :force => true do |t|
-    t.integer "colour_id"
-    t.string  "description"
+    t.string "description"
+    t.string "type",        :limit => 5, :null => false
   end
-
-  add_index "sizes", ["colour_id"], :name => "index_sizes_on_colour_id"
 
   create_table "stocks", :force => true do |t|
     t.integer  "article_id"
