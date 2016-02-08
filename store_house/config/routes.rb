@@ -1,9 +1,13 @@
 StoreHouse::Application.routes.draw do
   # The priority is based upon order of creation:
   # first created -> highest priority.
-  resources :business_data, :only => [:index, :update] do
-  end
+  root :to => "business_data#index"
 
+  resources :business_data
+  #   collection do
+  #     post :business_data
+  #   end
+  # end
 
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'
