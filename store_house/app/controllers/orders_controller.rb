@@ -1,4 +1,7 @@
 class OrdersController < ApplicationController
+
+  before_filter :load_contact
+
   def new
     @order = Order.new
   end
@@ -15,5 +18,10 @@ class OrdersController < ApplicationController
     if @order.update(:params_data)
       redirect_to @order
     end
+  end
+
+  private
+  def load_customer
+    @customer = current_business.customers.build
   end
 end
