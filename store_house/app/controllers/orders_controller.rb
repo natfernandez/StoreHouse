@@ -1,6 +1,10 @@
 class OrdersController < ApplicationController
 
-  before_filter :load_contact
+  # before_filter :load_contact
+
+  def index
+    @orders = Order.all
+  end
 
   def new
     @order = Order.new
@@ -8,15 +12,20 @@ class OrdersController < ApplicationController
 
   def create
     @order = Order.new(params[:order])
-    @order.save
-    redirect_to orders_url
+
+    if @order.save
+      render :action => :index
+    else
+      render :action => :new
+    end
   end
 
   def update
     @order = Order.find(params[:id])
-
-    if @order.update(:params_data)
-      redirect_to @order
+    if @order.update_attributes(params[:order])
+      render :action => :index
+    else
+      render :action => :new
     end
   end
 
