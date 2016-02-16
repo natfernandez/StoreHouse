@@ -3,8 +3,9 @@ class Order < ActiveRecord::Base
   has_many :order_line_items, :inverse_of => :order
   belongs_to :contact, :inverse_of => :orders
 
+  accepts_nested_attributes_for :order_line_items
   # Attributes
-  attr_accessible :order_number, :date, :discount, :deliver_date
+  attr_accessible :order_number, :date, :discount, :deliver_date, :contact_id
 
   # Validations
   validates :contact_id, :order_number, :date, :presence => true

@@ -11,6 +11,7 @@ describe Order, :type => :model do
     it { is_expected.to allow_mass_assignment_of :date }
     it { is_expected.to allow_mass_assignment_of :discount }
     it { is_expected.to allow_mass_assignment_of :deliver_date }
+    it { is_expected.to allow_mass_assignment_of :contact_id }
   end
 
   describe 'validations' do

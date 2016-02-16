@@ -1,19 +1,24 @@
 class BusinessDataController < ApplicationController
   def new
-    @bussines_data = BusinessData.new
+    @business_data = BusinessData.new
   end
 
   def create
-    @bussines_data = BusinessData.new(params[:business_data])
-    @bussines_data.save
-    redirect_to business_data_url
+    @business_data = BusinessData.new(params[:business_data])
+    @business_data.save
+
+    if @business_data
+      render :index
+    else
+      flash[:error] =  @businnes_data.errors.messages
+      render :action => 'index'
+    end
   end
 
   def update
     @business_data = BusinessData.find(params[:id])
-
-    if @business_data.update(:params_data)
-      redirect_to @business_data
+    if @business_data.update_attributes(params[:business_data])
+      render :action => 'index'
     end
   end
 end
