@@ -1,10 +1,10 @@
 class OrderLineItem < ActiveRecord::Base
   # Associations
-  belongs_to :order, :foreign_key => :order_id, :inverse_of => :order_line_item
+  belongs_to :order, :foreign_key => :order_id, :inverse_of => :order_line_items
 
 
   # Attributes
-  attr_accessible :colour, :size, :price, :quantity
+  attr_accessible :order_id, :article_id, :colour, :size, :price, :quantity
 
   # Validations
   validates :colour, :size, :price, :quantity, :presence => true

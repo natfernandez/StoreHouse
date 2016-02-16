@@ -21,9 +21,18 @@ class StocksController < ApplicationController
     if @stock.update_attributes(params[:stock])
       render :action => :index
     else
-    binding.pry
       render :action => :new
     end
   end
-end
 
+  def show
+    @stock = Stock.find(params[:id])
+
+    if @stock.present?
+      render :action => :show
+    else
+      flash[:error] = "Could not show the stock"
+      render :action => 'index'
+    end
+  end
+end

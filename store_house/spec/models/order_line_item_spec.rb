@@ -10,6 +10,8 @@ describe OrderLineItem, :type => :model do
     it { is_expected.to allow_mass_assignment_of :size }
     it { is_expected.to allow_mass_assignment_of :price }
     it { is_expected.to allow_mass_assignment_of :quantity }
+    it { is_expected.to allow_mass_assignment_of :order_id }
+    it { is_expected.to allow_mass_assignment_of :article_id }
   end
 
   describe 'validations' do
