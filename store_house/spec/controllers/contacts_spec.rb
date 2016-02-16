@@ -2,7 +2,7 @@ require 'spec_helper'
 
 RSpec.describe ContactsController, :type => :controller do
   routes { StoreHouse::Application.routes }
-  let(:contact) { stub_model(Contact, { id: 18 , name: 'Contact One', tax_number: '12345678F'} ) }
+  let(:contact) { double('Contact', { id: 18 , name: 'Contact One', tax_number: '12345678F'} ) }
   let(:contact_params) { {'name' => 'Contact One', 'tax_number:' => '12345678F'} }
   let(:errors) { double 'Errors' }
 

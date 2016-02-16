@@ -29,11 +29,9 @@ class ContactsController < ApplicationController
 
   def show
     @contact = Contact.find_by_id(params[:id])
-    if @contact.present?
-      render :show
-    else
+    if @contact.blank?
       flash[:error] = "Could not show the contact"
-      render :action => 'index'
+      render :action => :index
     end
   end
 end
