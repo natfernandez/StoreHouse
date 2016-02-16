@@ -18,7 +18,7 @@ class ArticlesController < ApplicationController
   end
 
   def update
-    @article = Article.find(params[:id])
+    @article = Article.find_by_id(params[:id])
 
     if @article.update_attributes(params[:article])
       render :action => 'index'
@@ -26,7 +26,7 @@ class ArticlesController < ApplicationController
   end
 
   def show
-    @article = Article.find(params[:id])
+    @article = Article.find_by_id(params[:id])
     if @article.present?
       render :show
     else

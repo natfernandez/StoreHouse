@@ -17,7 +17,7 @@ class CostsController < ApplicationController
   end
 
   def update
-    @cost = Cost.find(params[:id])
+    @cost = Cost.find_by_id(params[:id])
 
     if @cost.update_attributes(params[:cost])
       render :action => :index
