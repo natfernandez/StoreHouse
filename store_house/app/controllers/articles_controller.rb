@@ -20,8 +20,10 @@ class ArticlesController < ApplicationController
   def update
     @article = Article.find_by_id(params[:id])
 
-    if @article.update_attributes(params[:article])
+    if @article.try(:update_attributes, params[:article])
       render :action => 'index'
+    else
+      render :action => 'show'
     end
   end
 
