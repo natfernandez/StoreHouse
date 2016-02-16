@@ -5,11 +5,10 @@ class BusinessDataController < ApplicationController
 
   def create
     @business_data = BusinessData.new(params[:business_data])
-
     if @business_data.save
       render :index
     else
-      flash[:error] =  @businnes_data.errors.messages
+      flash[:error] =  @business_data.errors.messages
       render :action => 'index'
     end
   end
@@ -18,6 +17,8 @@ class BusinessDataController < ApplicationController
     @business_data = BusinessData.find_by_id(params[:id])
     if @business_data.update_attributes(params[:business_data])
       render :action => 'index'
+    else
+      render :action => 'show'
     end
   end
 end
