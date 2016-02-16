@@ -12,6 +12,7 @@ class ContactsController < ApplicationController
     if @contact.save
       render :action => :index
     else
+      binding.pry
       flash[:error] =  @contact.errors.messages
       render :action => 'new'
     end

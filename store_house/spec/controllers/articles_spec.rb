@@ -25,49 +25,50 @@ RSpec.describe ArticlesController, :type => :controller do
   end
 
   describe 'POST #create articles controller' do
-    let(:article_created) { Article.new({'code' => '999', 'description' => 'Jumper'})}
-    let(:article_error) { Article.new({'description' => 'Jumper'})}
     let(:article_params) { {'code' => '999', 'description' => 'Jumper'} }
     it 'creates a new article instance and response success' do
-      expect(Article).to receive(:new).and_return(article_created)
-      expect(article_created).to receive(:save).and_return(true)
+      expect(Article).to receive(:new).and_return(article)
+      expect(article).to receive(:save).and_return(true)
       post :create, article_params
       expect(response).to be_success
     end
 
     it 'renders article template index when all is ok' do
-      allow(Article).to receive(:new).and_return(article_created)
-      allow(article_created).to receive(:save).and_return true
+      allow(Article).to receive(:new).and_return article
+      allow(article).to receive(:save).and_return true
       post :create, article_params
       expect(response).to render_template(:index)
     end
 
-
+    let(:errors) { double('Errors') }
+    let(:messages) { { messages => { :foo => ['Bar'] } } }
     it 'renders article template new and shows errors when any is failed ' do
-      allow(Article).to receive(:new).and_return(article_error)
-      allow(article_error).to receive(:save).and_return false
-      article_error.valid?
+      allow(Article).to receive(:new).and_return(article)
+      allow(article).to receive(:save).and_return false
+      allow(article).to receive(:valid?).and_return false
+      allow(article).to receive(:errors).and_retun errors
+      allow(errors).to receive(:messages).and_return(:foo => ['Bar'])
       post :create, :article => {'description' => 'Jumper'}
-      expect(article_error.errors[:code]).to include("can't be blank")
+      expect(article.errors[:foo]).to include('Bar')
       expect(response).to render_template(:new)
     end
   end
 
   describe 'GET #update articles controller' do
     it 'finds the article_id passed' do
-      allow(Article).to receive(:find).and_return article
+      allow(Article).to receive(:find_by_id).and_return article
       put :update, id: '8', article: {:description => 'Sweater black'}
       expect(assigns(:article)).to eq(article)
     end
 
     it 'updates article with params passed' do
-      allow(Article).to receive(:find).and_return article
+      allow(Article).to receive(:find_by_id).and_return article
       put :update, id: '8', article: {:description => 'Sweater black'}
       expect(article.description).to eq('Sweater black')
     end
 
     it' renders the article template' do
-      allow(Article).to receive(:find).and_return(article)
+      allow(Article).to receive(:find_by_id).and_return(article)
       put :update, id: '8', article: {:description => 'Sweater black'}
       expect(response).to render_template(:index)
     end
@@ -75,19 +76,19 @@ RSpec.describe ArticlesController, :type => :controller do
 
   describe 'get #show articles controller' do
     it 'finds the article_id passed' do
-      allow(Article).to receive(:find).and_return(article)
+      allow(Article).to receive(:find_by_id).and_return(article)
       get :show, id: '8'
       expect(assigns(:article)).to eq(article)
     end
 
     it' renders the article template' do
-      allow(Article).to receive(:find).and_return(article)
+      allow(Article).to receive(:find_by_id).and_return(article)
       get :show, :id => 8
       expect(response).to render_template(:show)
     end
 
     it 'returns a flash with the error message and renders the index page' do
-      allow(Article).to receive(:find).and_return nil
+      allow(Article).to receive(:find_by_id).and_return nil
       get :show, id: 3
       expect(flash[:error]).to eql("Could not show the article")
       expect(response).to render_template('index')
