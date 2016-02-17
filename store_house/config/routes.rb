@@ -4,7 +4,7 @@ StoreHouse::Application.routes.draw do
   root :to => "business_data#index"
 
   resources :business_data, only: [:create, :new, :update, :show, :index]
-  resources :articles, only: [:create, :new, :update, :show, :index]
+  resources :articles, only: [:create, :new, :update, :show, :index, :destroy]
   resources :contacts, only: [:create, :new, :update, :show, :index]
   resources :costs, only: [:create, :new, :update, :show, :index]
   resources :orders, only: [:create, :new, :update, :show, :index]

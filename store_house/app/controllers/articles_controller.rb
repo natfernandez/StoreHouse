@@ -36,4 +36,18 @@ class ArticlesController < ApplicationController
       render :action => 'index'
     end
   end
+
+  def destroy
+    @article = Article.find_by_id(params[:id])
+    @article.deleted_at = Date.today
+    @article.save unless article_used?(params[:id])
+    render :action => :index
+  end
+
+  private
+
+  def article_used?(article_id)
+    true if ( Cost.find_by_article_id(article_id) || OrderLineItem.find_by_article_id(article_id) || Stock.find_by_article_id(article_id) )
+    false
+  end
 end

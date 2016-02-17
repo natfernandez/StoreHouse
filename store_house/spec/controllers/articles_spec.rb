@@ -103,4 +103,30 @@ RSpec.describe ArticlesController, :type => :controller do
       expect(response).to render_template('index')
     end
   end
+  describe 'delete articles controller' do
+    it 'finds the article_id passed' do
+      expect(Article).to receive(:find_by_id).and_return(article)
+      allow(subject).to receive(:article_used?).and_return false
+      delete :destroy, id: '8'
+      expect(assigns(:article)).to eq(article)
+    end
+
+    it 'update deleted_at with the date of today' do
+      allow(Article).to receive(:find_by_id).and_return article
+      allow(article).to receive(:deleted_at).and_return Date.today
+      allow(subject).to receive(:article_used?).and_return false
+      delete :destroy, :id => 8
+      expect(article.deleted_at).to eq(Date.today)
+    end
+
+    it 'save deleted_at with the date of today' do
+      allow(Article).to receive(:find_by_id).and_return(article)
+      allow(article).to receive(:deleted_at).and_return(Date.today)
+      allow(subject).to receive(:article_used?).and_return false
+      expect(article).to receive(:save).and_return true
+      delete :destroy, :id => 8
+      expect(response).to render_template(:index)
+    end
+
+  end
 end
