@@ -15,7 +15,7 @@ class BusinessDataController < ApplicationController
 
   def update
     @business_data = BusinessData.find_by_id(params[:id])
-    if @business_data.update_attributes(params[:business_data])
+    if @business_data.try(:update_attributes, params[:business_data])
       render :action => 'index'
     else
       render :action => 'show'

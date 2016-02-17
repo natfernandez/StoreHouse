@@ -19,8 +19,11 @@ class CostsController < ApplicationController
   def update
     @cost = Cost.find_by_id(params[:id])
 
-    if @cost.update_attributes(params[:cost])
+    if @cost.try(:update_attributes, params[:cost])
       render :action => :index
+    else
+      flash[:error] =  @cost.errors.messages
+      render :action => :show
     end
   end
 end

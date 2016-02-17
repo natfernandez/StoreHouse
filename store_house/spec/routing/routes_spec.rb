@@ -38,6 +38,9 @@ describe 'routes for Articles Controller' do
   it 'routes /articles#update' do
     expect(put('/articles/1')).to route_to(:controller => 'articles', :action => 'update', :id => '1')
   end
+  it 'routes /articles#destroy' do
+    expect(delete('/articles/1')).to route_to(:controller => 'articles', :action => 'destroy', :id => '1')
+  end
 end
 describe 'routes for Contacts Controller' do
   it 'routes /contacts#index' do

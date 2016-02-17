@@ -1,6 +1,6 @@
 class OrderLineItem < ActiveRecord::Base
   # Associations
-  belongs_to :order, :foreign_key => :order_id, :inverse_of => :order_line_items
+  belongs_to :order, :foreign_key => :order_id, :inverse_of => :order_line_items, autosave: true
 
 
   # Attributes

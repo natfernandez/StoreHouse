@@ -12,27 +12,26 @@ class ContactsController < ApplicationController
     if @contact.save
       render :action => :index
     else
-      binding.pry
       flash[:error] =  @contact.errors.messages
       render :action => 'new'
     end
   end
 
   def update
-    @contact = Contact.find(params[:id])
+    @contact = Contact.find_by_id(params[:id])
 
     if @contact.update_attributes(params[:contact])
       render :action => 'index'
+    else
+      render :action => 'show'
     end
   end
 
   def show
-    @contact = Contact.find(params[:id])
-    if @contact.present?
-      render :show
-    else
+    @contact = Contact.find_by_id(params[:id])
+    if @contact.blank?
       flash[:error] = "Could not show the contact"
-      render :action => 'index'
+      render :action => :index
     end
   end
 end

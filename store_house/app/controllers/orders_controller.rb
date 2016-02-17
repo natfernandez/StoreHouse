@@ -12,11 +12,12 @@ class OrdersController < ApplicationController
 
   def create
     @order = Order.new(params[:order])
-    @order.order_line_items.new(params[:order_line_items])
-
+    @order.order_line_items.build(params[:order_line_items])
+    @order.build_contact(params[:contact])
     if @order.save
       render :action => :index
     else
+      flash[:error] =  @order.errors.messages
       render :action => :new
     end
   end
@@ -24,9 +25,8 @@ class OrdersController < ApplicationController
   def update
     @order = Order.find_by_id(params[:id])
 
-    @order_line_items = OrderLineItem.find_by_order_id(params[:id])
-    @order_line_items.update_attributes(params[:order_line_items])
-
+    update_contact if params[:contact]
+    update_order_line_items if params[:order_line_items]
     if @order.update_attributes(params[:order])
       render :action => :index
     else
@@ -37,5 +37,15 @@ class OrdersController < ApplicationController
   private
   def load_contact
     @contact = @order.build_contact
+  end
+
+  def update_contact
+    @order.contact.assign_attributes(params[:contact])
+    @order.contact.save
+  end
+
+  def update_order_line_items
+    @order.order_line_items.assign_attributes(params[:order_line_items])
+    @order.order_line_items.save
   end
 end
