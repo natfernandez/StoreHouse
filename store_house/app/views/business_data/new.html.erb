@@ -1,27 +1,27 @@
 <h1>Datos fiscales de la empresa</h1>
 <%= form_for :business_data, :url => business_data_path do |b| %>
   <p>
-  <%= b.label "Nombre de Empresa" %><br>
+  <%= b.label 'Nombre de Empresa' %><br>
   <%= b.text_field :name %>
   </p>
 
   <p>
-  <%= b.label "Razón Social" %><br>
+  <%= b.label 'Razón Social' %><br>
   <%= b.text_field :company %>
   </p>
 
   <p>
-  <%= b.label "NIF" %><br>
+  <%= b.label 'NIF' %><br>
   <%= b.text_field :tax_number %>
   </p>
 
   <p>
-  <%= b.label "Teléfono" %><br>
+  <%= b.label 'Teléfono' %><br>
   <%= b.text_field :telephone %>
   </p>
 
   <p>
-  <%= b.label "Móvil" %><br>
+  <%= b.label 'Móvil' %><br>
   <%= b.text_field :mobile %>
   </p>
 

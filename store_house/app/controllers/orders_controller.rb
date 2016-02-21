@@ -11,7 +11,8 @@ class OrdersController < ApplicationController
   end
 
   def create
-    @order = Order.new(params[:order])
+    binding.pry
+    @order = Order.new(params[:orders])
     @order.order_line_items.build(params[:order_line_items])
     @order.build_contact(params[:contact])
     if @order.save
