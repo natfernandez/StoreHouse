@@ -8,12 +8,14 @@ class OrdersController < ApplicationController
 
   def new
     @order = Order.new
+    @order.order_line_items.build
   end
 
   def create
-    @order = Order.new(params[:order])
-    @order.order_line_items.build(params[:order_line_items])
-    @order.build_contact(params[:contact])
+    @order = Order.new
+    @order.assign_attributes(params[:order].except(:order_line_items_attributes))
+    @order.order_line_items_attributes=(params[:order][:order_line_items_attributes])
+    binding.pry
     if @order.save
       render :action => :index
     else

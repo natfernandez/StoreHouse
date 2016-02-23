@@ -1,0 +1,33 @@
+<h1>Pedido</h1>
+<%= form_for @order, :url => orders_path, :method => :post, :action => :create do |o| %>
+  <p><label>Contacto</label>
+  <%= o.text_field :contact_id %></p>
+
+  <p><label>Nº pedido</label>
+  <%= o.text_field :order_number %></p>
+
+  <p><label>Fecha</label>
+  <%= o.text_field :date %></p>
+
+  <p><label>Descuento</label>
+  <%= o.text_field :discount %></p>
+
+  <%= o.fields_for :order_line_items do |li| %>
+    <table border=1>
+      <tr>
+        <td><label>Articulo</label></td>
+        <td><label>Color</label></td>
+        <td><label>Talla</label></td>
+        <td><label>Cantidad</label></td>
+        <td><label>Precio</label></td>
+      </tr>
+      <tr>
+        <td><%= li.text_field :article_id %></td>
+        <td><%= li.text_field :colour %></td>
+        <td><%= li.text_field :size %></td>
+        <td><%= li.text_field :quantity %></td>
+        <td><%= li.text_field :price %></td>
+      </tr>
+    </table><% end %>
+  <p><%= submit_tag %></p>
+<% end %>
