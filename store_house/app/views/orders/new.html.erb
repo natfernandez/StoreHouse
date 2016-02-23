@@ -1,106 +1,33 @@
 <h1>Pedido</h1>
-<%= form_for :orders, :url => orders_path, :method => :post do |o| %>
-  <table>
-    <tr>
-      <td>
-        <p>
-        <%= o.label 'Cliente' %><br>
-        <%= o.text_field :contact_id %>
-        </p>
-      </td>
+<%= form_for @order, :url => orders_path, :method => :post, :action => :create do |o| %>
+  <p><label>Contacto</label>
+  <%= o.text_field :contact_id %></p>
 
-      <td>
-        <p>
-        <%= o.label 'NIF' %><br>
-        <%= o.text_field :tax_number %>
-        </p>
-      </td>
+  <p><label>Nº pedido</label>
+  <%= o.text_field :order_number %></p>
 
-      <td>
-        <p>
-        <%= o.label 'Dirección' %><br>
-        <%= o.text_field :line_1 %>
-        </p>
-      </td>
+  <p><label>Fecha</label>
+  <%= o.text_field :date %></p>
 
-      <td>
-        <p>
-        <%= o.label 'Nº Pedido' %><br>
-        <%= o.text_field :order_number %>
-        </p>
-      </td>
-    </tr>
-    <tr>
+  <p><label>Descuento</label>
+  <%= o.text_field :discount %></p>
 
-      <td>
-        <p>
-        <%= o.label 'Fecha Pedido' %><br>
-        <%= o.text_field :date %>
-        </p>
-      </td>
-
-      <td>
-        <p>
-        <%= o.label 'Fecha Entrega' %><br>
-        <%= o.text_field :deliver_date %>
-        </p>
-      </td>
-    </tr>
-  </table>
-
-  <table border=1>
-    <tr>
-      <td>
-        <p>
-        <%= o.label 'Modelo' %><br>
-        <%= o.text_field :article_id %>
-        </p>
-      </td>
-
-      <td>
-        <p>
-        <%= o.label 'Descripción' %><br>
-        <%= o.text_field :description %>
-        </p>
-      </td>
-
-      <td>
-        <p>
-        <%= o.label 'Color' %><br>
-        <%= o.text_field :colour %>
-        </p>
-      </td>
-
-      <td>
-        <p>
-        <%= o.label 'M' %><br>
-        <%= o.text_field :size %>
-        </p>
-      </td>
-
-      <td>
-        <p>
-        <%= o.label 'Unidades' %><br>
-        <%= o.text_field :quantity %>
-        </p>
-      </td>
-
-      <td>
-        <p>
-        <%= o.label 'Precio' %><br>
-        <%= o.text_field :price %>
-        </p>
-      </td>
-
-      <td>
-        <p>
-        <%= o.label 'Importe' %><br>
-        <%= o.text_field :importe %>
-        </p>
-      </td>
-    </tr>
-  </table>
-  <p>
-  <%= o.submit %>
-  </p>
+  <%= o.fields_for :order_line_items do |li| %>
+    <table border=1>
+      <tr>
+        <td><label>Articulo</label></td>
+        <td><label>Color</label></td>
+        <td><label>Talla</label></td>
+        <td><label>Cantidad</label></td>
+        <td><label>Precio</label></td>
+      </tr>
+      <tr>
+        <td><%= li.text_field :article_id %></td>
+        <td><%= li.text_field :colour %></td>
+        <td><%= li.text_field :size %></td>
+        <td><%= li.text_field :quantity %></td>
+        <td><%= li.text_field :price %></td>
+      </tr>
+    </table><% end %>
+  <p><%= submit_tag %></p>
 <% end %>
