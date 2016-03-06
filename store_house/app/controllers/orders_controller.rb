@@ -13,13 +13,12 @@ class OrdersController < ApplicationController
 
   def create
     @order = Order.new
-    @order.assign_attributes(params[:order].except(:order_line_items_attributes))
-    @order.order_line_items_attributes=(params[:order][:order_line_items_attributes])
-    binding.pry
+    @order.assign_attributes(params[:order])
     if @order.save
-      render :action => :index
+      flash[:notice] = 'El registro se ha guardado correctamente.'
+      redirect_to business_data_url
     else
-      flash[:error] =  @order.errors.messages
+      flash[:error] =  @order.errors
       render :action => :new
     end
   end

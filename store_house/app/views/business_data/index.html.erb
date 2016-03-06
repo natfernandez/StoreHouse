@@ -4,3 +4,6 @@
     <li><%= link_to 'Nuevo Pedido', new_order_path %></li>
   </ul>
 </div>
+<% if flash[:notice] %>
+  <%= content_tag :div, flash[:notice] %>
+<% end %>

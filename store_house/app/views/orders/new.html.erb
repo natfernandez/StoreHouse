@@ -31,3 +31,9 @@
     </table><% end %>
   <p><%= submit_tag %></p>
 <% end %>
+
+<% unless flash[:error].blank?%>
+  <% flash[:error].full_messages.each do |key| %>
+    <%= content_tag :div, key %>
+  <% end %>
+<% end %>

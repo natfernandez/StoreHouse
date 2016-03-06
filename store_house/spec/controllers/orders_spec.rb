@@ -2,7 +2,7 @@ require 'spec_helper'
 
 RSpec.describe OrdersController, :type => :controller do
   routes { StoreHouse::Application.routes }
-  let(:order) { double('Order',{ id: 8 , order_number: 22, date: '2016/01/01', contact_id: 88, discount: 10 })}
+  let(:order) { stub_model Order, :id => 8 , :order_number => 22, :date => '2016/01/01', :contact_id => 88, :discount => 10 }
   let(:order_line_item) { double('OrderLineItem', { :order_id => 8, :article_id => 1, :colour => 'azul',
                                                     :size => 'M', :price => 5.0, :quantity => 4 }) }
   let(:contact) { double('Contact', { id: 18 , name: 'Contact One', tax_number: '12345678F'} ) }
@@ -35,32 +35,23 @@ RSpec.describe OrdersController, :type => :controller do
   end
 
   describe 'POST #create orders controller' do
-    it 'creates a new order instance and response success' do
-      expect(Order).to receive(:new).and_return(order)
-      expect(order).to receive(:order_line_items).and_return(order_line_item)
-      expect(order_line_item).to receive(:build).and_return(order_line_item)
-      expect(order).to receive(:build_contact).and_return(contact)
-      expect(order).to receive(:save).and_return(true)
-      post :create, order_params
-      expect(response).to be_success
-    end
-
-    it 'renders article template index when all is ok' do
+    before do
       allow(Order).to receive(:new).and_return(order)
-      allow(order).to receive(:order_line_items).and_return(order_line_item)
-      allow(order_line_item).to receive(:build).and_return(order_line_item)
-      allow(order).to receive(:build_contact).and_return(contact)
+      allow(order).to receive(:assign_attributes)
       allow(order).to receive(:save).and_return(true)
       post :create, order_params
-      expect(response).to render_template(:index)
+    end
+
+    it 'shows a message when all was ok' do
+      expect(flash.notice).to eq('El registro se ha guardado correctamente.')
+    end
+
+    it 'redirect to business_data_url when all is ok' do
+      expect(subject).to redirect_to(business_data_url)
     end
 
 
     it 'renders article template new and shows errors when any is failed ' do
-      allow(Order).to receive(:new).and_return(order)
-      allow(order).to receive(:order_line_items).and_return(order_line_item)
-      allow(order_line_item).to receive(:build).and_return(order_line_item)
-      allow(order).to receive(:build_contact).and_return(contact)
       allow(order).to receive(:save).and_return false
       allow(order).to receive(:valid?).and_return(false)
       allow(order).to receive(:errors).and_return(errors)

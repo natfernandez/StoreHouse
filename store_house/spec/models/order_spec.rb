@@ -12,6 +12,7 @@ describe Order, :type => :model do
     it { is_expected.to allow_mass_assignment_of :discount }
     it { is_expected.to allow_mass_assignment_of :deliver_date }
     it { is_expected.to allow_mass_assignment_of :contact_id }
+    it { is_expected.to allow_mass_assignment_of :order_line_items_attributes }
   end
 
   describe 'validations' do
@@ -24,7 +25,7 @@ describe Order, :type => :model do
   describe 'initialization' do
     describe 'set_defaults' do
       it 'should initialize discount to 0.0' do
-        expect(subject.discount).to eql(0.0)
+        expect(subject.discount).to eql(0)
       end
     end
   end
