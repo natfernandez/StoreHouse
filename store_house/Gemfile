@@ -27,4 +27,5 @@ group :development, :test do
   gem 'pry-debugger', :platforms => :ruby_19
   gem 'pry-byebug', :platforms => [:ruby_20, :ruby_21]
   gem 'jquery-rails'
+  gem 'rspec-activemodel-mocks'
 end
