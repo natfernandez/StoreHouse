@@ -1,6 +1,7 @@
 class OrdersController < ApplicationController
 
   # before_filter :load_contact, :only => [:create, :new]
+  before_filter :load_order, :only => [:update, :show]
 
   def index
     @orders = Order.all
@@ -24,18 +25,27 @@ class OrdersController < ApplicationController
   end
 
   def update
-    @order = Order.find_by_id(params[:id])
-
-    update_contact if params[:contact]
-    update_order_line_items if params[:order_line_items]
-    if @order.update_attributes(params[:order])
-      render :action => :index
+    @order.assign_attributes(params[:order])
+    if @order.save
+      flash[:notice] = 'El registro se ha modificado correctamente.'
+      redirect_to business_data_url
     else
-      render :action => :new
+      flash[:error] =  @order.errors
+      render :show
     end
   end
 
+  def show
+    @order = Order.find_by_id(params[:id])
+  end
+
   private
+
+  def load_order
+    @order = Order.find_by_id(params[:id])
+    render :file => 'public/404.html', :status => :not_found unless @order.present?
+  end
+
   def load_contact
     @contact = @order.build_contact
   end
